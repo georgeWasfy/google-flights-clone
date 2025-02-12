@@ -2,6 +2,7 @@ import {
   CircleOutlined,
   EastOutlined,
   PinDrop,
+  Search,
   SyncAltOutlined,
 } from "@mui/icons-material";
 import {
@@ -12,6 +13,7 @@ import {
   Button,
   InputAdornment,
   Grid2,
+  Fab,
 } from "@mui/material";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFnsV3";
@@ -46,135 +48,156 @@ const FlightSearchBar = () => {
   } = useSearchParams();
 
   return (
-    <div className="search-bar-container">
-      <Grid2 container spacing={2}>
-        {/* Trip Type dropdown */}
-        <Grid2>
-          <FormControl fullWidth variant="standard" color="primary">
-            <Select
-              value={tripType}
-              onChange={(e) => setTripType(e.target.value)}
-              disableUnderline
-              sx={CustomStyles.select}
-            >
-              <MenuItem value="one-way">
-                <div style={{ display: "flex", alignItems: "center" }}>
-                  <EastOutlined style={{ marginRight: "8px", color: "gray" }} />
-                  one-way
-                </div>
-              </MenuItem>
-              <MenuItem value="round-trip">
-                <div style={{ display: "flex", alignItems: "center" }}>
-                  <SyncAltOutlined
-                    style={{ marginRight: "8px", color: "gray" }}
-                  />
-                  round-trip
-                </div>
-              </MenuItem>
-            </Select>
-          </FormControl>
-        </Grid2>
-
-        {/* Custom Passengers Dropdown component */}
-        <Grid2>
-          <FormControl fullWidth variant="standard" color="primary">
-            <PassengersDropdown />
-          </FormControl>
-        </Grid2>
-
-        {/* Flight class dropdown */}
-        <Grid2>
-          <FormControl fullWidth variant="standard" color="primary">
-            <Select
-              value={flightClass}
-              onChange={(e) => setFlightClass(e.target.value)}
-              disableUnderline
-              sx={CustomStyles.select}
-            >
-              <MenuItem value="economy">economy</MenuItem>
-              <MenuItem value="first-class">first-class</MenuItem>
-            </Select>
-          </FormControl>
-        </Grid2>
-      </Grid2>
-
-      <Grid2 container spacing={2} alignItems="center">
-        {/* Destination Textboxes */}
-        <Grid2 container spacing={0} alignItems="center">
+    <div>
+      <div className="search-bar-container">
+        <Grid2 container spacing={2}>
+          {/* Trip Type dropdown */}
           <Grid2>
-            <TextField
-              className="inner-curve-left"
-              fullWidth
-              variant="outlined"
-              value={departureCity}
-              onChange={(e) => setDepartureCity(e.target.value)}
-              slotProps={{
-                input: {
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <CircleOutlined />
-                    </InputAdornment>
-                  ),
-                },
-              }}
-            />
-          </Grid2>
-          <Grid2>
-            <Button variant="text" size="small" style={{ borderRadius: "50%" }}>
-              <SyncAltOutlined style={{ color: "gray" }} />
-            </Button>
-          </Grid2>
-          <Grid2>
-            <TextField
-              className="inner-curve-right"
-              fullWidth
-              variant="outlined"
-              value={destinationCity}
-              onChange={(e) => setDestinationCity(e.target.value)}
-              slotProps={{
-                input: {
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <PinDrop />
-                    </InputAdornment>
-                  ),
-                },
-              }}
-            />
-          </Grid2>
-        </Grid2>
-
-        {/* Dates Inputs */}
-        <Grid2 container spacing={0} alignItems="center" size={6}>
-          <Grid2 size={tripType === "round-trip" ? 6 : 12}>
-            <FormControl fullWidth variant="outlined">
-              <LocalizationProvider dateAdapter={AdapterDateFns}>
-                <DatePicker
-                  label="Controlled picker"
-                  value={departureDate}
-                  onChange={(newValue) => setDepartureDate(newValue)}
-                  className="background"
-                />
-              </LocalizationProvider>
+            <FormControl fullWidth variant="standard" color="primary">
+              <Select
+                value={tripType}
+                onChange={(e) => setTripType(e.target.value)}
+                disableUnderline
+                sx={CustomStyles.select}
+              >
+                <MenuItem value="one-way">
+                  <div style={{ display: "flex", alignItems: "center" }}>
+                    <EastOutlined
+                      style={{ marginRight: "8px", color: "gray" }}
+                    />
+                    one-way
+                  </div>
+                </MenuItem>
+                <MenuItem value="round-trip">
+                  <div style={{ display: "flex", alignItems: "center" }}>
+                    <SyncAltOutlined
+                      style={{ marginRight: "8px", color: "gray" }}
+                    />
+                    round-trip
+                  </div>
+                </MenuItem>
+              </Select>
             </FormControl>
           </Grid2>
 
-          {tripType === "round-trip" && (
-            <Grid2 size={6}>
+          {/* Custom Passengers Dropdown component */}
+          <Grid2>
+            <FormControl fullWidth variant="standard" color="primary">
+              <PassengersDropdown />
+            </FormControl>
+          </Grid2>
+
+          {/* Flight class dropdown */}
+          <Grid2>
+            <FormControl fullWidth variant="standard" color="primary">
+              <Select
+                value={flightClass}
+                onChange={(e) => setFlightClass(e.target.value)}
+                disableUnderline
+                sx={CustomStyles.select}
+              >
+                <MenuItem value="economy">economy</MenuItem>
+                <MenuItem value="first-class">first-class</MenuItem>
+              </Select>
+            </FormControl>
+          </Grid2>
+        </Grid2>
+
+        <Grid2 container spacing={2} alignItems="center">
+          {/* Destination Textboxes */}
+          <Grid2 container spacing={0} alignItems="center">
+            <Grid2>
+              <TextField
+                className="inner-curve-left"
+                fullWidth
+                variant="outlined"
+                value={departureCity}
+                onChange={(e) => setDepartureCity(e.target.value)}
+                slotProps={{
+                  input: {
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <CircleOutlined />
+                      </InputAdornment>
+                    ),
+                  },
+                }}
+              />
+            </Grid2>
+            <Grid2>
+              <Button
+                variant="text"
+                size="small"
+                style={{ borderRadius: "50%" }}
+              >
+                <SyncAltOutlined style={{ color: "gray" }} />
+              </Button>
+            </Grid2>
+            <Grid2>
+              <TextField
+                className="inner-curve-right"
+                fullWidth
+                variant="outlined"
+                value={destinationCity}
+                onChange={(e) => setDestinationCity(e.target.value)}
+                slotProps={{
+                  input: {
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <PinDrop />
+                      </InputAdornment>
+                    ),
+                  },
+                }}
+              />
+            </Grid2>
+          </Grid2>
+
+          {/* Dates Inputs */}
+          <Grid2 container spacing={0} alignItems="center" size={6}>
+            <Grid2 size={tripType === "round-trip" ? 6 : 12}>
               <FormControl fullWidth variant="outlined">
                 <LocalizationProvider dateAdapter={AdapterDateFns}>
                   <DatePicker
-                    label="Return Date"
-                    value={returnDate}
-                    onChange={(newDate) => setReturnDate(newDate)}
+                    label="Controlled picker"
+                    value={departureDate}
+                    onChange={(newValue) => setDepartureDate(newValue)}
                     className="background"
                   />
                 </LocalizationProvider>
               </FormControl>
             </Grid2>
-          )}
+
+            {tripType === "round-trip" && (
+              <Grid2 size={6}>
+                <FormControl fullWidth variant="outlined">
+                  <LocalizationProvider dateAdapter={AdapterDateFns}>
+                    <DatePicker
+                      label="Return Date"
+                      value={returnDate}
+                      onChange={(newDate) => setReturnDate(newDate)}
+                      className="background"
+                    />
+                  </LocalizationProvider>
+                </FormControl>
+              </Grid2>
+            )}
+          </Grid2>
         </Grid2>
-      </Grid2>
+        <br />        
+      </div>
+      {/* Floating Button */}
+      <Fab
+        variant="extended"
+        color="primary"
+        aria-label="search"
+        style={{
+          bottom: 30,
+          right: 30,
+        }}
+      >
+        search <Search />
+      </Fab>
     </div>
   );
 };

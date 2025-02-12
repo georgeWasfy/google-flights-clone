@@ -6,13 +6,17 @@ function App() {
   return (
     <>
       <div className="imageContainer">
-        <img src="src/assets/hero.svg" alt="Travel " ></img>
+        <img src="src/assets/hero.svg" alt="Travel " height="250px"></img>
       </div>
 
       <h1>Flight</h1>
       <SearchParamsContextProvider>
         <FlightSearchBar />
       </SearchParamsContextProvider>
+      <br></br>
+      <br></br>
+      <br></br>
+
       <FlightCard />
     </>
   );
