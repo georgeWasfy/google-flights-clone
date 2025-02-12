@@ -19,7 +19,36 @@ import {
 import { useState, useRef } from "react";
 
 const PassengerTypes = ["Adults", "Children", "Infants"];
-
+const CustomStyles = {
+  dropdown_trigger: {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    textAlign: "left",
+    borderRadius: "4px",
+    backgroundColor: "#fff",
+    color: "black",
+    boxShadow: "none",
+    outline: "none",
+    "&:hover": {
+      backgroundColor: "#eeebeb",
+      borderRadius: "4px",
+    },
+    "&:focus": {
+      outline: "none",
+      boxShadow: "none",
+    },
+  },
+  remove_outline: {
+    boxShadow: "none",
+    outline: "none",
+    "&:focus": {
+      outline: "none",
+      border: "none",
+      boxShadow: "none",
+    },
+  },
+};
 const PassengersDropdown = () => {
   const [open, setOpen] = useState(false);
   const buttonRef = useRef(null);
@@ -45,25 +74,7 @@ const PassengersDropdown = () => {
         disableRipple
         ref={buttonRef}
         onClick={handleMenuOpen}
-        sx={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          textAlign: "left",
-          borderRadius: "4px",
-          backgroundColor: "#fff",
-          color: "black",
-          boxShadow: "none",
-          outline: "none",
-          "&:hover": {
-            backgroundColor: "#eeebeb",
-            borderRadius: "4px",
-          },
-          "&:focus": {
-            outline: "none",
-            boxShadow: "none",
-          },
-        }}
+        sx={CustomStyles.dropdown_trigger}
       >
         <span style={{ marginLeft: "auto" }}>
           <div style={{ display: "flex", alignItems: "center" }}>
@@ -112,26 +123,10 @@ const PassengersDropdown = () => {
                             disableRipple
                             value={totalPassengers.toString()}
                             onClick={decrementValue}
-                            sx={{
-                              boxShadow: "none",
-                              outline: "none",
-                              "&:focus": {
-                                outline: "none",
-                                border: "none",
-                                boxShadow: "none",
-                              },
-                            }}
+                            sx={CustomStyles.remove_outline}
                           >
                             <IconButton
-                              sx={{
-                                boxShadow: "none",
-                                outline: "none",
-                                "&:focus": {
-                                  outline: "none",
-                                  border: "none",
-                                  boxShadow: "none",
-                                },
-                              }}
+                              sx={CustomStyles.remove_outline}
                               color="primary"
                               size="small"
                             >
@@ -144,26 +139,10 @@ const PassengersDropdown = () => {
                             disableRipple
                             value={totalPassengers.toString()}
                             onClick={incrementValue}
-                            sx={{
-                              boxShadow: "none",
-                              outline: "none",
-                              "&:focus": {
-                                outline: "none",
-                                border: "none",
-                                boxShadow: "none",
-                              },
-                            }}
+                            sx={CustomStyles.remove_outline}
                           >
                             <IconButton
-                              sx={{
-                                boxShadow: "none",
-                                outline: "none",
-                                "&:focus": {
-                                  outline: "none",
-                                  border: "none",
-                                  boxShadow: "none",
-                                },
-                              }}
+                              sx={CustomStyles.remove_outline}
                               color="primary"
                               size="small"
                             >
