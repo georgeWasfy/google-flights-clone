@@ -14,32 +14,40 @@ import {
   Grid2,
 } from "@mui/material";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
-import { useState } from "react";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFnsV3";
 import "./styles.css";
 import PassengersDropdown from "../../components/PassengersDropdown";
-const FlightSearchBar = () => {
-  const [departureCity, setDepartureCity] = useState("");
-  const [destinationCity, setDestinationCity] = useState("");
-  const [departureDate, setDepartureDate] = useState<Date | null | undefined>(
-    null
-  );
-  const [returnDate, setReturnDate] = useState<Date | null | undefined>(null);
-  const [tripType, setTripType] = useState("one-way");
-  const [flightClass, setFlightClass] = useState("economy");
+import useSearchParams from "../../hooks/useSearchParams";
 
-  const useStyles = {
-    select: {
-      "&:hover": {
-        backgroundColor: "#eeebeb",
-        borderRadius: "4px",
-      },
+const CustomStyles = {
+  select: {
+    "&:hover": {
+      backgroundColor: "#eeebeb",
+      borderRadius: "4px",
     },
-  };
+  },
+};
+const FlightSearchBar = () => {
+  const {
+    departureCity,
+    destinationCity,
+    setDepartureCity,
+    setDestinationCity,
+
+    tripType,
+    flightClass,
+    setTripType,
+    setFlightClass,
+
+    departureDate,
+    returnDate,
+    setDepartureDate,
+    setReturnDate,
+  } = useSearchParams();
+
   return (
     <div className="search-bar-container">
       <Grid2 container spacing={2}>
-
         {/* Trip Type dropdown */}
         <Grid2>
           <FormControl fullWidth variant="standard" color="primary">
@@ -47,7 +55,7 @@ const FlightSearchBar = () => {
               value={tripType}
               onChange={(e) => setTripType(e.target.value)}
               disableUnderline
-              sx={useStyles.select}
+              sx={CustomStyles.select}
             >
               <MenuItem value="one-way">
                 <div style={{ display: "flex", alignItems: "center" }}>
@@ -81,7 +89,7 @@ const FlightSearchBar = () => {
               value={flightClass}
               onChange={(e) => setFlightClass(e.target.value)}
               disableUnderline
-              sx={useStyles.select}
+              sx={CustomStyles.select}
             >
               <MenuItem value="economy">economy</MenuItem>
               <MenuItem value="first-class">first-class</MenuItem>

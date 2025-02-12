@@ -17,6 +17,7 @@ import {
   IconButton,
 } from "@mui/material";
 import { useState, useRef } from "react";
+import useSearchParams from "../hooks/useSearchParams";
 
 const PassengerTypes = ["Adults", "Children", "Infants"];
 const CustomStyles = {
@@ -52,19 +53,12 @@ const CustomStyles = {
 const PassengersDropdown = () => {
   const [open, setOpen] = useState(false);
   const buttonRef = useRef(null);
-  // TODO: separate counter for each type of passengers, when moving the state to context
-  const [totalPassengers, setTotalPassengers] = useState(0);
-
-  const incrementValue = () => {
-    setTotalPassengers(totalPassengers + 1);
-  };
-
-  const decrementValue = () => {
-    if (totalPassengers > 0) {
-      setTotalPassengers(totalPassengers - 1);
-    }
-  };
-
+  const {
+    decrementPassengersCount,
+    incrementPassengersCount,
+    getTotalPassengers,
+    getPassengersCount,
+  } = useSearchParams();
   const handleMenuOpen = () => {
     setOpen((prev) => !prev);
   };
@@ -79,7 +73,7 @@ const PassengersDropdown = () => {
         <span style={{ marginLeft: "auto" }}>
           <div style={{ display: "flex", alignItems: "center" }}>
             <Person style={{ color: "gray" }} />
-            {totalPassengers.toString()}
+            {getTotalPassengers().toString()}
             <ArrowDropDownOutlined
               style={{ marginRight: "8px", color: "gray" }}
             />
@@ -121,8 +115,8 @@ const PassengersDropdown = () => {
                           {/* Decrement Button */}
                           <Button
                             disableRipple
-                            value={totalPassengers.toString()}
-                            onClick={decrementValue}
+                            value={getPassengersCount(type).toString()}
+                            onClick={() => decrementPassengersCount(type)}
                             sx={CustomStyles.remove_outline}
                           >
                             <IconButton
@@ -133,12 +127,12 @@ const PassengersDropdown = () => {
                               <Remove />
                             </IconButton>
                           </Button>
-                          {totalPassengers}
+                          {getPassengersCount(type)}
                           {/* Increment Button */}
                           <Button
                             disableRipple
-                            value={totalPassengers.toString()}
-                            onClick={incrementValue}
+                            value={getPassengersCount(type).toString()}
+                            onClick={() => incrementPassengersCount(type)}
                             sx={CustomStyles.remove_outline}
                           >
                             <IconButton
