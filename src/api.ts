@@ -23,10 +23,13 @@ export const serialize = ({params, options}: SerializeParams) => {
 };
 
 export const api = axios.create({
-    baseURL: config.apiURL,
-    headers: {},
-    paramsSerializer: {
-      serialize: params => serialize({params}),
-    },
-  });
-  
+  baseURL: config.apiURL,
+  headers: {
+    "x-rapidapi-key": config.apiKey,
+    "x-rapidapi-host": config.apiHost
+  },
+  paramsSerializer: {
+    serialize: (params) => serialize({ params }),
+  },
+});
+
