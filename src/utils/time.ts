@@ -21,6 +21,11 @@ export function getFormattedTimes(time: {
   return `${formattedDeparture} - ${formattedArrival}`;
 }
 
+export function getFormattedTime(time: string) {
+    const formattedTime = formatTime(time);
+    return formattedTime;
+  }
+
 export function getEstimatedTime(time: {
   departure: string;
   arrival: string;
