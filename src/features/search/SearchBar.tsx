@@ -14,6 +14,7 @@ import {
   InputAdornment,
   Grid2,
   Fab,
+  Autocomplete,
 } from "@mui/material";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFnsV3";
@@ -105,86 +106,112 @@ const FlightSearchBar = () => {
 
         <Grid2 container spacing={2} alignItems="center">
           {/* Destination Textboxes */}
-          <Grid2 container spacing={0} alignItems="center">
-            <Grid2>
-              <TextField
-                className="inner-curve-left"
-                fullWidth
-                variant="outlined"
-                value={departureCity}
-                onChange={(e) => setDepartureCity(e.target.value)}
-                slotProps={{
-                  input: {
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <CircleOutlined />
-                      </InputAdornment>
-                    ),
-                  },
-                }}
-              />
-            </Grid2>
-            <Grid2>
-              <Button
-                variant="text"
-                size="small"
-                style={{ borderRadius: "50%" }}
-              >
-                <SyncAltOutlined style={{ color: "gray" }} />
-              </Button>
-            </Grid2>
-            <Grid2>
-              <TextField
-                className="inner-curve-right"
-                fullWidth
-                variant="outlined"
-                value={destinationCity}
-                onChange={(e) => setDestinationCity(e.target.value)}
-                slotProps={{
-                  input: {
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <PinDrop />
-                      </InputAdornment>
-                    ),
-                  },
-                }}
-              />
+          <Grid2 size={{ sm: 12, md: 6 }}>
+            <Grid2 container spacing={0}>
+              <Grid2 size={5}>
+                <Autocomplete
+                  disablePortal
+                  options={[
+                    { label: "The Godfather", id: 1 },
+                    { label: "Pulp Fiction", id: 2 },
+                  ]}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      className="inner-curve-left"
+                      variant="outlined"
+                      value={departureCity}
+                      onChange={(e) => setDepartureCity(e.target.value)}
+                      slotProps={{
+                        input: {
+                          ...params.InputProps,
+                          startAdornment: (
+                            <InputAdornment position="start">
+                              <CircleOutlined />
+                            </InputAdornment>
+                          ),
+                        },
+                      }}
+                    />
+                  )}
+                />
+              </Grid2>
+              <Grid2 size={2}>
+                  <Button
+                    variant="text"
+                    size="large"
+                    sx={{ borderRadius: "50%" }}
+                  >
+                    <SyncAltOutlined
+                      style={{ color: "gray",padding:6 }}
+                    />
+                  </Button>
+              </Grid2>
+              <Grid2 size={5}>
+                <Autocomplete
+                  getOptionLabel={(option: any) => option.label}
+                  disablePortal
+                  options={[
+                    { label: "The Godfather", id: 1 },
+                    { label: "Pulp Fiction", id: 2 },
+                  ]}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      className="inner-curve-right"
+                      variant="outlined"
+                      value={destinationCity}
+                      onChange={(e) => setDestinationCity(e.target.value)}
+                      slotProps={{
+                        input: {
+                          ...params.InputProps,
+                          startAdornment: (
+                            <InputAdornment position="start">
+                              <PinDrop />
+                            </InputAdornment>
+                          ),
+                        },
+                      }}
+                    />
+                  )}
+                />
+              </Grid2>
             </Grid2>
           </Grid2>
-
           {/* Dates Inputs */}
-          <Grid2 container spacing={0} alignItems="center" size={6}>
-            <Grid2 size={tripType === "round-trip" ? 6 : 12}>
-              <FormControl fullWidth variant="outlined">
-                <LocalizationProvider dateAdapter={AdapterDateFns}>
-                  <DatePicker
-                    label="Controlled picker"
-                    value={departureDate}
-                    onChange={(newValue) => setDepartureDate(newValue)}
-                    className="background"
-                  />
-                </LocalizationProvider>
-              </FormControl>
-            </Grid2>
-
-            {tripType === "round-trip" && (
-              <Grid2 size={6}>
+          <Grid2 size={{ sm: 12, md: 6 }}>
+            <Grid2 container spacing={0}>
+              <Grid2 size={tripType === "round-trip" ? 6 : 12}>
                 <FormControl fullWidth variant="outlined">
                   <LocalizationProvider dateAdapter={AdapterDateFns}>
                     <DatePicker
-                      label="Return Date"
-                      value={returnDate}
-                      onChange={(newDate) => setReturnDate(newDate)}
+                      label="Controlled picker"
+                      value={departureDate}
+                      onChange={(newValue) => setDepartureDate(newValue)}
                       className="background"
                     />
                   </LocalizationProvider>
                 </FormControl>
               </Grid2>
-            )}
+
+              {tripType === "round-trip" && (
+                <Grid2 size={6}>
+                  <FormControl fullWidth variant="outlined">
+                    <LocalizationProvider dateAdapter={AdapterDateFns}>
+                      <DatePicker
+                        label="Return Date"
+                        value={returnDate}
+                        onChange={(newDate) => setReturnDate(newDate)}
+                        className="background"
+                      />
+                    </LocalizationProvider>
+                  </FormControl>
+                </Grid2>
+              )}
+            </Grid2>
           </Grid2>
         </Grid2>
-        <br />        
+        <br />
       </div>
       {/* Floating Button */}
       <Fab

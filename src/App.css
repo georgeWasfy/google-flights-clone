@@ -1,11 +1,12 @@
 #root {
-  max-width: 1280px;
+  max-width: 1020px;
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+
 }
 
-.imageContainer {
+ .imageContainer {
   width: 100vw;
   max-width: 100%;
   padding: 0;
