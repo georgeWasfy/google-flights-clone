@@ -50,14 +50,14 @@ export type SearchParams = {
   originEntityId: string;
   destinationEntityId: string;
 
-  date: Date;
-  returnDate: Date;
+  date: string;
+  returnDate?: string;
 
-  cabinClass: (typeof FLIGHT_CLASS)[number];
+  cabinClass?: (typeof FLIGHT_CLASS)[number];
 
-  adults: number;
-  childrens: number;
-  infants: number;
+  adults?: number;
+  childrens?: number;
+  infants?: number;
 };
 
 export const FLIGHT_CLASS = [

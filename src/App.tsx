@@ -1,6 +1,5 @@
 import "./App.css";
 import SearchParamsContextProvider from "./context/SearchParamsContext";
-import FlightCard from "./features/list/FlightCard";
 import FlightSearchBar from "./features/search/SearchBar";
 function App() {
   return (
@@ -11,10 +10,6 @@ function App() {
       <h1>Flight</h1>
       <SearchParamsContextProvider>
         <FlightSearchBar />
-        <br></br>
-        <br></br>
-        <br></br>
-        <FlightCard />
       </SearchParamsContextProvider>
     </div>
   );

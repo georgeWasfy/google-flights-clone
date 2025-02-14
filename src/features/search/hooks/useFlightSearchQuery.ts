@@ -8,9 +8,9 @@ import { SearchParams } from "../types";
 import { AxiosError } from "axios";
 import { FlightResponse } from "../../list/types";
 
-const queryKey = (params: SearchParams) => ["flights", params];
+const queryKey = (params?: SearchParams) => ["flights", params];
 
-const queryFn = (params: SearchParams) =>
+const queryFn = (params?: SearchParams) =>
   api
     .get<FlightResponse>("v2/flights/searchFlights", {
       params,
@@ -18,12 +18,13 @@ const queryFn = (params: SearchParams) =>
     .then((res) => res.data);
 
 export const useFlightsQuery = (
-  params: SearchParams,
+  params?: SearchParams,
   options?: UseQueryOptions<FlightResponse, AxiosError<{ message: string }>>
 ) =>
   useQuery({
     queryKey: queryKey(params),
     queryFn: () => queryFn(params),
+    enabled: !!params,
     ...options,
   });
 

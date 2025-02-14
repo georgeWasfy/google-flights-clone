@@ -7,7 +7,7 @@ export const preprocess_airports = (
     return data
       .filter((el) => el.navigation.entityType === "AIRPORT")
       .map((el) => {
-        return { id: el.entityId, label: el.presentation.suggestionTitle };
+        return { id: el.entityId, label: el.presentation.suggestionTitle, skyId: el.skyId };
       });
   }
 };

@@ -3,12 +3,16 @@ import {
   AccordionSummary,
   Typography,
   Grid2,
+  AccordionDetails,
+  Divider,
 } from "@mui/material";
 import { getEstimatedTime, getFormattedTimes } from "../../utils/time";
 import useSearchParams from "../../hooks/useSearchParams";
 import { ExpandMore } from "@mui/icons-material";
-
-const FlightCard = ({single_card}: {single_card: any}) => {
+import FlightSegment from "./FlightSegment";
+import { Itinerary } from "./types";
+import { v4 as uuidv4 } from 'uuid';
+const FlightCard = ({ itinerary }: { itinerary: Itinerary }) => {
   const { tripType } = useSearchParams();
   return (
     <Accordion>
@@ -20,8 +24,8 @@ const FlightCard = ({single_card}: {single_card: any}) => {
         <Grid2 width="100%" container spacing={2} alignItems="center">
           <Grid2 size={1} alignItems="center">
             <img
-              src={single_card.legs[0].carriers.marketing[0].logoUrl}
-              alt={single_card.legs[0].carriers.marketing[0].name}
+              src={itinerary.legs[0].carriers.marketing[0].logoUrl}
+              alt={itinerary.legs[0].carriers.marketing[0].name}
               style={{
                 width: "100%",
                 maxWidth: "40px",
@@ -34,14 +38,15 @@ const FlightCard = ({single_card}: {single_card: any}) => {
           <Grid2 size={3} alignItems="center">
             <Typography variant="body1" fontWeight="bold">
               {getFormattedTimes({
-                arrival: single_card.legs[0].arrival,
-                departure: single_card.legs[0].departure,
+                arrival: itinerary.legs[0].arrival,
+                departure: itinerary.legs[0].departure,
               })}
             </Typography>
-            {single_card.legs[0].segments.map((seg: any) => (
+            {itinerary.legs[0].segments.map((seg) => (
               <Typography
                 variant="caption"
                 sx={{ color: "gray", marginBottom: "8px" }}
+                key={uuidv4()}
               >
                 {seg.marketingCarrier.name}
               </Typography>
@@ -51,20 +56,20 @@ const FlightCard = ({single_card}: {single_card: any}) => {
           <Grid2 size={2} alignItems="center">
             <Typography variant="body1" fontWeight="bold">
               {getEstimatedTime({
-                arrival: single_card.legs[0].arrival,
-                departure: single_card.legs[0].departure,
+                arrival: itinerary.legs[0].arrival,
+                departure: itinerary.legs[0].departure,
               })}
             </Typography>
             <Typography
               variant="caption"
               sx={{ color: "gray", marginBottom: "8px" }}
             >
-              {`${single_card.legs[0].segments[0].origin.displayCode} - ${single_card.legs[0].segments[0].destination.displayCode}`}
+              {`${itinerary.legs[0].segments[0].origin.displayCode} - ${itinerary.legs[0].segments[0].destination.displayCode}`}
             </Typography>
           </Grid2>
           <Grid2 size={2} alignItems="center">
             <Typography variant="body1" fontWeight="bold">
-              {single_card.legs[0].stopCount} stop
+              {itinerary.legs[0].stopCount} stop
             </Typography>
             <Typography
               variant="caption"
@@ -75,7 +80,7 @@ const FlightCard = ({single_card}: {single_card: any}) => {
           </Grid2>
           <Grid2 size={2} alignItems="center">
             <Typography variant="body1" fontWeight="bold">
-              {single_card.eco.ecoContenderDelta} kg CO2e
+              {100} kg CO2e
             </Typography>
             <Typography
               variant="caption"
@@ -86,7 +91,7 @@ const FlightCard = ({single_card}: {single_card: any}) => {
           </Grid2>
           <Grid2 size={2} alignItems="center">
             <Typography variant="body1" fontWeight="bold">
-              {single_card.price.formatted}
+              {itinerary.price.formatted}
             </Typography>
             <Typography
               variant="caption"
@@ -97,39 +102,22 @@ const FlightCard = ({single_card}: {single_card: any}) => {
           </Grid2>
         </Grid2>
       </AccordionSummary>
-      {/* <AccordionDetails>
+      <AccordionDetails>
         <Divider />
-        <Grid2 container>
-          <Grid2>
-            <img
-              src="src/assets/airline_logo.png"
-              alt="Example"
-              style={{
-                width: "100%",
-                maxWidth: "50px",
-                borderRadius: "8px",
-                marginBottom: "10px",
-              }}
+        {itinerary.legs[0].segments.map((seg) => (
+          <div key={uuidv4()}>
+            <FlightSegment
+              segment={seg}
+              airlineLogo={
+                itinerary.legs[0].carriers.marketing[0].logoUrl || ""
+              }
+              airlineName={itinerary.legs[0].carriers.marketing[0].name}
+              flightEmission="100"
             />
-          </Grid2>
-
-          <Grid2>
-            <Grid2 container>
-              <Grid2>the line</Grid2>
-              <Grid2>
-                <Typography variant="body1">EGP 79,528</Typography>
-                <Typography variant="body1">EGP 79,528</Typography>
-                <Typography variant="body1">EGP 79,528</Typography>
-              </Grid2>
-            </Grid2>
-          </Grid2>
-
-          <Grid2>
-            <Typography variant="body1">EGP 79,528</Typography>
-            <Typography variant="body1">EGP 79,528</Typography>
-          </Grid2>
-        </Grid2>
-      </AccordionDetails> */}
+            <Divider />
+          </div>
+        ))}
+      </AccordionDetails>
     </Accordion>
   );
 };

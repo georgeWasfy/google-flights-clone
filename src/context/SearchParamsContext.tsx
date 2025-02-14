@@ -1,4 +1,5 @@
 import { createContext, ReactNode, useState } from "react";
+import { SearchParams } from "../features/search/types";
 
 type SearchParamsContextType = {
   setDepartureCity: React.Dispatch<
@@ -40,7 +41,7 @@ type SearchParamsContextType = {
   getTotalPassengers: () => number;
   getPassengersCount: (x: string) => number;
   reverseDepartureDestination: () => void;
-  getFullSearchParams: () => void;
+  getFullSearchParams: () => SearchParams;
 };
 
 export const SearchParamsContext =
@@ -148,7 +149,7 @@ export default function SearchParamsContextProvider({
       adults: adultsCount,
       childrens: childrenCount,
       infants: infantsCount,
-    };
+    } as SearchParams;
   };
 
   return (
