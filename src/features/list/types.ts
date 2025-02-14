@@ -103,7 +103,7 @@ export type FlightData = {
 };
   
   export type FlightResponse = {
-    status: string;
+    status: boolean;
     timestamp: number;
     sessionId: string;
     data: FlightData;

@@ -26,9 +26,10 @@ import useSearchParams from "../../hooks/useSearchParams";
 import { useAirportsQuery } from "./hooks/useAirportListing";
 import { preprocess_airports } from "../../utils/airport";
 import { useEffect, useState } from "react";
-import { FLIGHT_CLASS, SearchParams, SORTBY } from "./types";
+import { FLIGHT_CLASS, SearchParams } from "./types";
 import { useFlightsQuery } from "./hooks/useFlightSearchQuery";
 import ListFlights from "../list/ListFlights";
+import SortBy from "../../components/Sort";
 
 const CustomStyles = {
   select: {
@@ -294,7 +295,7 @@ const FlightSearchBar = () => {
         </Fab>
       </div>
 
-      {flights?.status === "failure" && (
+      {flights?.data.context.status === "failure" && (
         <Typography
           variant="caption"
           sx={{ color: "gray", marginBottom: "8px" }}
@@ -304,29 +305,7 @@ const FlightSearchBar = () => {
       )}
 
       {flights?.data?.itineraries.length && (
-        <Grid2 container spacing={1} width={"100%"} textAlign="end">
-          <Grid2 size={11}>
-            <Typography variant="subtitle1" fontWeight="bold" color="primary">
-              Sort by
-            </Typography>
-          </Grid2>
-
-          <Grid2 size={1}>
-            <FormControl variant="standard" color="primary">
-              <Select
-                value={sort_by}
-                onChange={(e) => setSortBy(e.target.value)}
-                disableUnderline
-              >
-                {SORTBY.map((cl) => (
-                  <MenuItem key={cl} value={cl}>
-                    {cl}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-          </Grid2>
-        </Grid2>
+        <SortBy setSortValue={setSortBy} sortValue={sort_by} />
       )}
       <ListFlights loading={isFlightsLoading} flights={flights?.data} />
     </>
