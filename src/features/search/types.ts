@@ -26,6 +26,8 @@ type Navigation = {
 };
 
 export type AirportSearchResponse = {
+  skyId: string;
+  entityId: string;
   presentation: Presentation;
   navigation: Navigation;
 };
@@ -35,3 +37,8 @@ export type ApiResponse<T> = {
   status: string;
   timestamp: string;
 };
+
+export type AirportOptions = {
+  id: string,
+  label: string
+}

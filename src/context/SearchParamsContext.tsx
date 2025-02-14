@@ -1,16 +1,32 @@
 import { createContext, ReactNode, useState } from "react";
 
 type SearchParamsContextType = {
-  setDepartureCity: React.Dispatch<React.SetStateAction<string>>;
-  setDestinationCity: React.Dispatch<React.SetStateAction<string>>;
+  setDepartureCity: React.Dispatch<
+    React.SetStateAction<{
+      id: string;
+      label: string;
+    } | null>
+  >;
+  setDestinationCity: React.Dispatch<
+    React.SetStateAction<{
+      id: string;
+      label: string;
+    } | null>
+  >;
   setDepartureDate: React.Dispatch<
     React.SetStateAction<Date | null | undefined>
   >;
   setReturnDate: React.Dispatch<React.SetStateAction<Date | null | undefined>>;
   setTripType: React.Dispatch<React.SetStateAction<string>>;
   setFlightClass: React.Dispatch<React.SetStateAction<string>>;
-  departureCity: string;
-  destinationCity: string;
+  departureCity: {
+    id: string;
+    label: string;
+  } | null;
+  destinationCity: {
+    id: string;
+    label: string;
+  } | null;
   departureDate: Date | null | undefined;
   returnDate: Date | null | undefined;
   tripType: string;
@@ -19,6 +35,7 @@ type SearchParamsContextType = {
   decrementPassengersCount: (x: string) => void;
   getTotalPassengers: () => number;
   getPassengersCount: (x: string) => number;
+  reverseDepartureDestination: () => void;
 };
 
 export const SearchParamsContext =
@@ -29,8 +46,14 @@ export default function SearchParamsContextProvider({
 }: {
   children: ReactNode;
 }) {
-  const [departureCity, setDepartureCity] = useState("");
-  const [destinationCity, setDestinationCity] = useState("");
+  const [departureCity, setDepartureCity] = useState<{
+    id: string;
+    label: string;
+  } | null>(null);
+  const [destinationCity, setDestinationCity] = useState<{
+    id: string;
+    label: string;
+  } | null>(null);
   const [departureDate, setDepartureDate] = useState<Date | null | undefined>(
     null
   );
@@ -54,7 +77,7 @@ export default function SearchParamsContextProvider({
       case "Infants":
         return infantsCount;
       default:
-        return 0
+        return 0;
     }
   };
   const incrementPassengersCount = (type: string) => {
@@ -95,6 +118,15 @@ export default function SearchParamsContextProvider({
     }
   };
 
+  const reverseDepartureDestination = () => {
+    const dep = departureCity;
+    console.log("🚀 ~ reverseDepartureDestination ~ dep:", dep);
+    const det = destinationCity;
+    console.log("🚀 ~ reverseDepartureDestination ~ det:", det);
+    setDepartureCity(det);
+    setDestinationCity(dep);
+  };
+
   return (
     <SearchParamsContext.Provider
       value={{
@@ -114,6 +146,7 @@ export default function SearchParamsContextProvider({
         decrementPassengersCount,
         getTotalPassengers,
         getPassengersCount,
+        reverseDepartureDestination,
       }}
     >
       {children}

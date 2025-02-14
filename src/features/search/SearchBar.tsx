@@ -21,6 +21,8 @@ import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFnsV3";
 import "./styles.css";
 import PassengersDropdown from "../../components/PassengersDropdown";
 import useSearchParams from "../../hooks/useSearchParams";
+import { useAirportsQuery } from "./hooks/useAirportListing";
+import { preprocess_airports } from "../../utils/airport";
 
 const CustomStyles = {
   select: {
@@ -46,8 +48,9 @@ const FlightSearchBar = () => {
     returnDate,
     setDepartureDate,
     setReturnDate,
+    reverseDepartureDestination,
   } = useSearchParams();
-
+  const { data } = useAirportsQuery({ query: "a" });
   return (
     <div>
       <div className="search-bar-container">
@@ -111,17 +114,19 @@ const FlightSearchBar = () => {
               <Grid2 size={5}>
                 <Autocomplete
                   disablePortal
-                  options={[
-                    { label: "The Godfather", id: 1 },
-                    { label: "Pulp Fiction", id: 2 },
-                  ]}
+                  options={preprocess_airports(data?.data) || []}
+                  value={departureCity}
+                  onChange={(
+                    _: any,
+                    newValue: { id: string; label: string } | null
+                  ) => {
+                    setDepartureCity(newValue);
+                  }}
                   renderInput={(params) => (
                     <TextField
                       {...params}
                       className="inner-curve-left"
                       variant="outlined"
-                      value={departureCity}
-                      onChange={(e) => setDepartureCity(e.target.value)}
                       slotProps={{
                         input: {
                           ...params.InputProps,
@@ -137,31 +142,32 @@ const FlightSearchBar = () => {
                 />
               </Grid2>
               <Grid2 size={2}>
-                  <Button
-                    variant="text"
-                    size="large"
-                    sx={{ borderRadius: "50%" }}
-                  >
-                    <SyncAltOutlined
-                      style={{ color: "gray",padding:6 }}
-                    />
-                  </Button>
+                <Button
+                  variant="text"
+                  size="large"
+                  sx={{ borderRadius: "50%" }}
+                  onClick={reverseDepartureDestination}
+                >
+                  <SyncAltOutlined style={{ color: "gray", padding: 6 }} />
+                </Button>
               </Grid2>
               <Grid2 size={5}>
                 <Autocomplete
                   getOptionLabel={(option: any) => option.label}
                   disablePortal
-                  options={[
-                    { label: "The Godfather", id: 1 },
-                    { label: "Pulp Fiction", id: 2 },
-                  ]}
+                  value={destinationCity}
+                  options={preprocess_airports(data?.data) || []}
+                  onChange={(
+                    _: any,
+                    newValue: { id: string; label: string } | null
+                  ) => {
+                    setDestinationCity(newValue);
+                  }}
                   renderInput={(params) => (
                     <TextField
                       {...params}
                       className="inner-curve-right"
                       variant="outlined"
-                      value={destinationCity}
-                      onChange={(e) => setDestinationCity(e.target.value)}
                       slotProps={{
                         input: {
                           ...params.InputProps,
