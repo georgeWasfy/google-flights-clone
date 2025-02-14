@@ -29,7 +29,7 @@ export const useAirportsQuery = (
 ) =>
   useQuery({
     queryKey: queryKey(params),
-    queryFn: () => queryFn(params),
+    queryFn: () => queryFn(params.query === "" ? {query: "a"} : params),
     ...options,
   });
 

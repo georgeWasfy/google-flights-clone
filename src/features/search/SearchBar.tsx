@@ -23,6 +23,7 @@ import PassengersDropdown from "../../components/PassengersDropdown";
 import useSearchParams from "../../hooks/useSearchParams";
 import { useAirportsQuery } from "./hooks/useAirportListing";
 import { preprocess_airports } from "../../utils/airport";
+import { useState } from "react";
 
 const CustomStyles = {
   select: {
@@ -50,7 +51,16 @@ const FlightSearchBar = () => {
     setReturnDate,
     reverseDepartureDestination,
   } = useSearchParams();
-  const { data } = useAirportsQuery({ query: "a" });
+  const [departureAirportPrefix, setDepartureAirportPrefix] = useState("");
+  const [destinationAirportPrefix, setDestinationAirportPrefix] = useState("");
+
+  const { data: departureAirports, isLoading: departureAirportsLoading } = useAirportsQuery({
+    query: departureAirportPrefix,
+  });
+  const { data: destinationAirports, isLoading: destinationAirportsLoading } = useAirportsQuery({
+    query: destinationAirportPrefix,
+  });
+
   return (
     <div>
       <div className="search-bar-container">
@@ -113,14 +123,19 @@ const FlightSearchBar = () => {
             <Grid2 container spacing={0}>
               <Grid2 size={5}>
                 <Autocomplete
+                  loading={departureAirportsLoading}
                   disablePortal
-                  options={preprocess_airports(data?.data) || []}
+                  options={preprocess_airports(departureAirports?.data) || []}
                   value={departureCity}
                   onChange={(
                     _: any,
                     newValue: { id: string; label: string } | null
                   ) => {
                     setDepartureCity(newValue);
+                  }}
+                  inputValue={departureAirportPrefix}
+                  onInputChange={(_, newInputValue) => {
+                    setDepartureAirportPrefix(newInputValue);
                   }}
                   renderInput={(params) => (
                     <TextField
@@ -153,15 +168,20 @@ const FlightSearchBar = () => {
               </Grid2>
               <Grid2 size={5}>
                 <Autocomplete
+                  loading={destinationAirportsLoading}
                   getOptionLabel={(option: any) => option.label}
                   disablePortal
                   value={destinationCity}
-                  options={preprocess_airports(data?.data) || []}
+                  options={preprocess_airports(destinationAirports?.data) || []}
                   onChange={(
                     _: any,
                     newValue: { id: string; label: string } | null
                   ) => {
                     setDestinationCity(newValue);
+                  }}
+                  inputValue={destinationAirportPrefix}
+                  onInputChange={(_, newInputValue) => {
+                    setDestinationAirportPrefix(newInputValue);
                   }}
                   renderInput={(params) => (
                     <TextField
