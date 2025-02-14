@@ -58,6 +58,8 @@ export type SearchParams = {
   adults?: number;
   childrens?: number;
   infants?: number;
+  sortBy?: (typeof SORTBY)[number];
+  limit?: number;
 };
 
 export const FLIGHT_CLASS = [
@@ -65,4 +67,12 @@ export const FLIGHT_CLASS = [
   "premium_economy",
   "business",
   "first",
+] as const;
+
+export const SORTBY = [
+  "best",
+  "price_high",
+  "fastest",
+  "outbound_take_off_time",
+  "outbound_landing_time",
 ] as const;

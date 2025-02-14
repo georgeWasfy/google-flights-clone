@@ -16,6 +16,7 @@ import {
   Fab,
   Autocomplete,
   CircularProgress,
+  Typography,
 } from "@mui/material";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFnsV3";
@@ -24,8 +25,8 @@ import PassengersDropdown from "../../components/PassengersDropdown";
 import useSearchParams from "../../hooks/useSearchParams";
 import { useAirportsQuery } from "./hooks/useAirportListing";
 import { preprocess_airports } from "../../utils/airport";
-import { useState } from "react";
-import { FLIGHT_CLASS, SearchParams } from "./types";
+import { useEffect, useState } from "react";
+import { FLIGHT_CLASS, SearchParams, SORTBY } from "./types";
 import { useFlightsQuery } from "./hooks/useFlightSearchQuery";
 import ListFlights from "../list/ListFlights";
 
@@ -55,6 +56,8 @@ const FlightSearchBar = () => {
     setReturnDate,
     reverseDepartureDestination,
     getFullSearchParams,
+    sort_by,
+    setSortBy,
   } = useSearchParams();
   const [departureAirportPrefix, setDepartureAirportPrefix] = useState("");
   const [destinationAirportPrefix, setDestinationAirportPrefix] = useState("");
@@ -71,6 +74,9 @@ const FlightSearchBar = () => {
   const { data: flights, isLoading: isFlightsLoading } =
     useFlightsQuery(search);
 
+  useEffect(() => {
+    setSearch(getFullSearchParams());
+  }, [sort_by]);
   const handleSearch = () => {
     setSearch(getFullSearchParams());
   };
@@ -287,7 +293,42 @@ const FlightSearchBar = () => {
           )}
         </Fab>
       </div>
-      <ListFlights flights={flights?.data} />
+
+      {flights?.status === "failure" && (
+        <Typography
+          variant="caption"
+          sx={{ color: "gray", marginBottom: "8px" }}
+        >
+          No Flights Found
+        </Typography>
+      )}
+
+      {flights?.data?.itineraries.length && (
+        <Grid2 container spacing={1} width={"100%"} textAlign="end">
+          <Grid2 size={11}>
+            <Typography variant="subtitle1" fontWeight="bold" color="primary">
+              Sort by
+            </Typography>
+          </Grid2>
+
+          <Grid2 size={1}>
+            <FormControl variant="standard" color="primary">
+              <Select
+                value={sort_by}
+                onChange={(e) => setSortBy(e.target.value)}
+                disableUnderline
+              >
+                {SORTBY.map((cl) => (
+                  <MenuItem key={cl} value={cl}>
+                    {cl}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </Grid2>
+        </Grid2>
+      )}
+      <ListFlights loading={isFlightsLoading} flights={flights?.data} />
     </>
   );
 };

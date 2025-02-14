@@ -42,6 +42,8 @@ type SearchParamsContextType = {
   getPassengersCount: (x: string) => number;
   reverseDepartureDestination: () => void;
   getFullSearchParams: () => SearchParams;
+  sort_by: string;
+  setSortBy: React.Dispatch<React.SetStateAction<string>>;
 };
 
 export const SearchParamsContext =
@@ -68,6 +70,7 @@ export default function SearchParamsContextProvider({
   const [returnDate, setReturnDate] = useState<Date | null | undefined>(null);
   const [tripType, setTripType] = useState("one-way");
   const [flightClass, setFlightClass] = useState("economy");
+  const [sort_by, setSortBy] = useState("best");
 
   const [adultsCount, setAdultsCount] = useState(0);
   const [childrenCount, setChildrenCount] = useState(0);
@@ -149,6 +152,9 @@ export default function SearchParamsContextProvider({
       adults: adultsCount,
       childrens: childrenCount,
       infants: infantsCount,
+
+      sortBy: sort_by,
+      limit: 10,
     } as SearchParams;
   };
 
@@ -173,6 +179,8 @@ export default function SearchParamsContextProvider({
         getPassengersCount,
         reverseDepartureDestination,
         getFullSearchParams,
+        sort_by,
+        setSortBy,
       }}
     >
       {children}
