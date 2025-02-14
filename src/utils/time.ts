@@ -1,3 +1,5 @@
+import { Segment } from "../features/list/types";
+
 export function formatTime(time: string): string {
   const date = new Date(time);
   let hours: number | string = date.getHours();
@@ -45,3 +47,21 @@ export function getEstimatedTime(time: {
 
   return `${hours} hr ${minutes} min`;
 }
+
+export function calculateTotalWaitingTime(segments: Segment[]){
+  let totalWaitingTimeInMinutes = 0;
+
+
+  for (let i = 0; i < segments.length - 1; i++) {
+    const arrivalTime = new Date(segments[i].arrival);
+    const departureTimeNext = new Date(segments[i + 1].departure);
+
+    const timeDifference = (departureTimeNext.getTime() - arrivalTime.getTime()) / (1000 * 60);
+    totalWaitingTimeInMinutes += timeDifference;
+  }
+
+  const hours = Math.floor(totalWaitingTimeInMinutes / 60);
+  const minutes = totalWaitingTimeInMinutes % 60;
+
+  return `${hours} hr ${minutes} min`;
+};

@@ -19,7 +19,7 @@ type Carrier = {
   name: string;
 };
 
-type Segment = {
+export type Segment = {
   id: string;
   origin: FlightPlace;
   destination: FlightPlace;

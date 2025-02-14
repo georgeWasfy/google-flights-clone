@@ -6,12 +6,18 @@ import {
   AccordionDetails,
   Divider,
 } from "@mui/material";
-import { getEstimatedTime, getFormattedTimes } from "../../utils/time";
+import {
+  calculateTotalWaitingTime,
+  getEstimatedTime,
+  getFormattedTimes,
+} from "../../utils/time";
 import useSearchParams from "../../hooks/useSearchParams";
-import { ExpandMore } from "@mui/icons-material";
+import {
+  ExpandMore,
+} from "@mui/icons-material";
 import FlightSegment from "./FlightSegment";
 import { Itinerary } from "./types";
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from "uuid";
 const FlightCard = ({ itinerary }: { itinerary: Itinerary }) => {
   const { tripType } = useSearchParams();
   return (
@@ -75,7 +81,7 @@ const FlightCard = ({ itinerary }: { itinerary: Itinerary }) => {
               variant="caption"
               sx={{ color: "gray", marginBottom: "8px" }}
             >
-              Title sub
+              {calculateTotalWaitingTime(itinerary.legs[0].segments)}
             </Typography>
           </Grid2>
           <Grid2 size={2} alignItems="center">
