@@ -1,8 +1,8 @@
 import {
   ArrowDropDownOutlined,
-  Remove,
   Add,
   Person,
+  RemoveOutlined,
 } from "@mui/icons-material";
 import {
   Button,
@@ -14,7 +14,6 @@ import {
   MenuItem,
   Grid2,
   Typography,
-  IconButton,
 } from "@mui/material";
 import { useState, useRef } from "react";
 import useSearchParams from "../hooks/useSearchParams";
@@ -119,13 +118,17 @@ const PassengersDropdown = () => {
                             onClick={() => decrementPassengersCount(type)}
                             sx={CustomStyles.remove_outline}
                           >
-                            <IconButton
+                            {/* <IconButton
                               sx={CustomStyles.remove_outline}
                               color="primary"
                               size="small"
-                            >
-                              <Remove />
-                            </IconButton>
+                            > */}
+                            <RemoveOutlined
+                              sx={CustomStyles.remove_outline}
+                              color="primary"
+                              // size="small"
+                            />
+                            {/* </IconButton> */}
                           </Button>
                           {getPassengersCount(type)}
                           {/* Increment Button */}
@@ -135,13 +138,17 @@ const PassengersDropdown = () => {
                             onClick={() => incrementPassengersCount(type)}
                             sx={CustomStyles.remove_outline}
                           >
-                            <IconButton
+                            {/* <IconButton
                               sx={CustomStyles.remove_outline}
                               color="primary"
                               size="small"
-                            >
-                              <Add />
-                            </IconButton>
+                            > */}
+                            <Add
+                              sx={CustomStyles.remove_outline}
+                              color="primary"
+                              // size="small"
+                            />
+                            {/* </IconButton> */}
                           </Button>
                         </Grid2>
                       </Grid2>

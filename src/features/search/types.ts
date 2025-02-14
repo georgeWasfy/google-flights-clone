@@ -42,3 +42,27 @@ export type AirportOptions = {
   id: string,
   label: string
 }
+
+export type SearchParams = {
+  originSkyId: string;
+  destinationSkyId: string;
+
+  originEntityId: string;
+  destinationEntityId: string;
+
+  date: Date;
+  returnDate: Date;
+
+  cabinClass: (typeof FLIGHT_CLASS)[number];
+
+  adults: number;
+  childrens: number;
+  infants: number;
+};
+
+export const FLIGHT_CLASS = [
+  "economy",
+  "premium_economy",
+  "business",
+  "first",
+] as const;

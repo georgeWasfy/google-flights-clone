@@ -5,12 +5,14 @@ type SearchParamsContextType = {
     React.SetStateAction<{
       id: string;
       label: string;
+      skyId: string;
     } | null>
   >;
   setDestinationCity: React.Dispatch<
     React.SetStateAction<{
       id: string;
       label: string;
+      skyId: string;
     } | null>
   >;
   setDepartureDate: React.Dispatch<
@@ -22,10 +24,12 @@ type SearchParamsContextType = {
   departureCity: {
     id: string;
     label: string;
+    skyId: string;
   } | null;
   destinationCity: {
     id: string;
     label: string;
+    skyId: string;
   } | null;
   departureDate: Date | null | undefined;
   returnDate: Date | null | undefined;
@@ -36,6 +40,7 @@ type SearchParamsContextType = {
   getTotalPassengers: () => number;
   getPassengersCount: (x: string) => number;
   reverseDepartureDestination: () => void;
+  getFullSearchParams: () => void;
 };
 
 export const SearchParamsContext =
@@ -49,10 +54,12 @@ export default function SearchParamsContextProvider({
   const [departureCity, setDepartureCity] = useState<{
     id: string;
     label: string;
+    skyId: string;
   } | null>(null);
   const [destinationCity, setDestinationCity] = useState<{
     id: string;
     label: string;
+    skyId: string;
   } | null>(null);
   const [departureDate, setDepartureDate] = useState<Date | null | undefined>(
     null
@@ -120,11 +127,28 @@ export default function SearchParamsContextProvider({
 
   const reverseDepartureDestination = () => {
     const dep = departureCity;
-    console.log("🚀 ~ reverseDepartureDestination ~ dep:", dep);
     const det = destinationCity;
-    console.log("🚀 ~ reverseDepartureDestination ~ det:", det);
     setDepartureCity(det);
     setDestinationCity(dep);
+  };
+
+  const getFullSearchParams = () => {
+    return {
+      originSkyId: departureCity?.skyId,
+      destinationSkyId: destinationCity?.skyId,
+
+      originEntityId: departureCity?.id,
+      destinationEntityId: destinationCity?.id,
+
+      date: departureDate?.toLocaleDateString("en-CA"),
+      returnDate: returnDate ?? undefined,
+
+      cabinClass: flightClass,
+
+      adults: adultsCount,
+      childrens: childrenCount,
+      infants: infantsCount,
+    };
   };
 
   return (
@@ -147,6 +171,7 @@ export default function SearchParamsContextProvider({
         getTotalPassengers,
         getPassengersCount,
         reverseDepartureDestination,
+        getFullSearchParams,
       }}
     >
       {children}
