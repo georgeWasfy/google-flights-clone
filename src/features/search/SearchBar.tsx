@@ -62,6 +62,7 @@ const FlightSearchBar = () => {
   } = useSearchParams();
   const [departureAirportPrefix, setDepartureAirportPrefix] = useState("");
   const [destinationAirportPrefix, setDestinationAirportPrefix] = useState("");
+  const [search, setSearch] = useState<SearchParams>();
 
   const { data: departureAirports, isLoading: departureAirportsLoading } =
     useAirportsQuery({
@@ -71,9 +72,9 @@ const FlightSearchBar = () => {
     useAirportsQuery({
       query: destinationAirportPrefix,
     });
-  const [search, setSearch] = useState<SearchParams>();
   const { data: flights, isLoading: isFlightsLoading } =
     useFlightsQuery(search);
+
 
   useEffect(() => {
     setSearch(getFullSearchParams());
@@ -294,7 +295,7 @@ const FlightSearchBar = () => {
         </Fab>
       </div>
 
-      {flights?.data.context.status === "failure" && (
+      {flights?.data?.context?.status === "failure" && (
         <Typography
           variant="caption"
           sx={{ color: "gray", marginBottom: "8px" }}

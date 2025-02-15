@@ -102,7 +102,7 @@ const PassengersDropdown = () => {
               <ClickAwayListener onClickAway={() => setOpen(false)}>
                 <MenuList>
                   {PassengerTypes.map((type) => (
-                    <MenuItem disableRipple>
+                    <MenuItem key={type} disableRipple>
                       <Grid2
                         container
                         alignItems="center"
@@ -118,17 +118,10 @@ const PassengersDropdown = () => {
                             onClick={() => decrementPassengersCount(type)}
                             sx={CustomStyles.remove_outline}
                           >
-                            {/* <IconButton
-                              sx={CustomStyles.remove_outline}
-                              color="primary"
-                              size="small"
-                            > */}
                             <RemoveOutlined
                               sx={CustomStyles.remove_outline}
                               color="primary"
-                              // size="small"
                             />
-                            {/* </IconButton> */}
                           </Button>
                           {getPassengersCount(type)}
                           {/* Increment Button */}
@@ -138,17 +131,10 @@ const PassengersDropdown = () => {
                             onClick={() => incrementPassengersCount(type)}
                             sx={CustomStyles.remove_outline}
                           >
-                            {/* <IconButton
-                              sx={CustomStyles.remove_outline}
-                              color="primary"
-                              size="small"
-                            > */}
                             <Add
                               sx={CustomStyles.remove_outline}
                               color="primary"
-                              // size="small"
                             />
-                            {/* </IconButton> */}
                           </Button>
                         </Grid2>
                       </Grid2>

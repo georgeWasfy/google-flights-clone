@@ -154,7 +154,7 @@ export default function SearchParamsContextProvider({
       infants: infantsCount,
 
       sortBy: sort_by,
-      limit: 10,
+      limit: 50,
     } as SearchParams;
   };
 
