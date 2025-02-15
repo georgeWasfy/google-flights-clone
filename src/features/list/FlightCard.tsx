@@ -18,6 +18,7 @@ import {
 import FlightSegment from "./FlightSegment";
 import { Itinerary } from "./types";
 import { v4 as uuidv4 } from "uuid";
+import { mockEmissions } from "../../utils/airport";
 const FlightCard = ({ itinerary }: { itinerary: Itinerary }) => {
   const { tripType } = useSearchParams();
   return (
@@ -86,7 +87,7 @@ const FlightCard = ({ itinerary }: { itinerary: Itinerary }) => {
           </Grid2>
           <Grid2 size={2} alignItems="center">
             <Typography variant="body1" fontWeight="bold">
-              {100} kg CO2e
+              {mockEmissions()} kg CO2e
             </Typography>
             <Typography
               variant="caption"

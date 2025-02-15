@@ -1,50 +1,41 @@
-# React + TypeScript + Vite
+# Google Flights Clone (React)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is a **Google Flights clone** built with **React**. It allows users to search for flights, view details, and explore pricing options similar to the official Google Flights platform.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Search for flights by destination and dates
+- View flight options with pricing and other details
+- Responsive design, optimized for both desktop and mobile devices
 
-## Expanding the ESLint configuration
+## Installation
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+To set up and run the project locally, follow these steps:
 
-- Configure the top-level `parserOptions` property like this:
+### 1. Clone the repository
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+```bash
+git clone https://github.com/georgeWasfy/google-flights-clone.git
+cd google-flights-clone
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+### 2. Install dependencies
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
+```bash
+npm install
 ```
+
+### 3. Set up environment variables
+#### Create a .env file in the root of your project and add the following environment variables:
+```bash
+VITE_API_URL=<your_api_url>
+VITE_API_KEY=<your_api_key>
+VITE_API_HOST=<your_api_host>
+```
+
+### 4. Run the development server
+
+```bash
+npm run dev
+```
+

@@ -11,3 +11,8 @@ export const preprocess_airports = (
       });
   }
 };
+
+export const mockEmissions = () => {
+  const randomNum = 5 + Math.random() * 5;
+  return parseFloat(randomNum.toFixed(2));
+};

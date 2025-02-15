@@ -141,7 +141,7 @@ const FlightSearchBar = () => {
             </Grid2>
           </Grid2>
 
-          <Grid2 container spacing={2} alignItems="center">
+          <Grid2 container sx={{paddingBottom: '30px'}} spacing={2} alignItems="center">
             {/* Destination Textboxes */}
             <Grid2 size={{ sm: 12, md: 6 }}>
               <Grid2 container spacing={0}>
@@ -271,7 +271,6 @@ const FlightSearchBar = () => {
               </Grid2>
             </Grid2>
           </Grid2>
-          <br />
         </div>
         {/* Floating Button */}
         <Fab
